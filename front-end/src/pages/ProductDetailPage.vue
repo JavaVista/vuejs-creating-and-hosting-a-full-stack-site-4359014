@@ -46,14 +46,14 @@ export default {
   },
   methods: {
     async addToCart() {
-      await axios.post('/api/users/12345/cart', { id: this.$route.params.productId });
+      await axios.post(`/api/users/${this.user.uid}/cart`, { id: this.$route.params.productId });
       alert('Successfully added item to cart!');
     },
     async signIn() {
       const email = prompt('Please enter your email to sign in:');
       const auth = getAuth();
       const actionCodeSettings = {
-        url: `https://shaunwa-cautious-space-happiness-5v76p774rw63j6w-8080.preview.app.github.dev/products/${this.$route.params.productId}`,
+        url: 'https://zany-spoon-jjg9qrvw56257w4-8080.app.github.dev/products/${this.$route.params.productId}',
         handleCodeInApp: true,
       }
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);

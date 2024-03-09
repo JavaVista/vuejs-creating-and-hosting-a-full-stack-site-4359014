@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 import path from 'path';
 
 async function start() {
-  const url = `mongodb+srv://fsv-server:Abc123@cluster0.vkql371.mongodb.net/?retryWrites=true&w=majority`
+  const url = `mongodb+srv://fsv-server:@cluster0.pnrihge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
   const client = new MongoClient(url);
 
   await client.connect();
@@ -39,9 +39,18 @@ async function start() {
     const userId = req.params.userId;
     const productId = req.body.id;
 
+    const existingUser = await db.collection('users').findOne({ id: userId });
+
+    if (!existingUser) {
+      await db.collection('users').insertOne({
+        id: userId,
+        cartItems: []
+      });
+    }
     await db.collection('users').updateOne({ id: userId }, {
       $addToSet: { cartItems: productId }
     });
+
 
     const user = await db.collection('users').findOne({ id: req.params.userId });
     const populatedCart = await populateCartIds(user?.cartItems || []);

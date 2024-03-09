@@ -10,7 +10,7 @@ import NotFoundPage from './pages/NotFoundPage.vue';
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  // COPY AND PASTE YOUR FIREBASE CONFIG INFO HERE
+ // add your api keys here
 };
 
 initializeApp(firebaseConfig);
@@ -27,6 +27,9 @@ createApp(App)
   }, {
     path: '/products/:productId',
     component: ProductDetailPage,
+  }, {
+    path: '/',
+    redirect: '/products',
   }, {
     path: '/:pathMatch(.*)*',
     component: NotFoundPage,
